@@ -1,0 +1,718 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay2Apply · premium job applications</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ---------- CSS reset & base ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f9fc;
+            color: #1a2b4c;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- design tokens ---------- */
+        :root {
+            --primary: #0a66c2;
+            --primary-dark: #004182;
+            --primary-light: #e5f0fc;
+            --accent: #f5b342;
+            --success: #1e7e34;
+            --gray-100: #f3f6f9;
+            --gray-200: #e1e9f0;
+            --gray-300: #cbd5e1;
+            --gray-600: #5e6f8d;
+            --gray-800: #1e2a3e;
+            --white: #ffffff;
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+            --border-radius: 18px;
+            --border-radius-sm: 12px;
+        }
+
+        /* ---------- layout containers ---------- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- header / nav ---------- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+        }
+
+        .logo i {
+            color: var(--accent);
+            font-size: 1.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .credit-pill {
+            background: var(--primary-light);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .credit-pill i {
+            color: var(--accent);
+        }
+
+        .avatar {
+            background: var(--primary);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* ---------- hero ---------- */
+        .hero {
+            padding: 40px 0 24px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            max-width: 700px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            background: linear-gradient(145deg, var(--primary), #2b7fd9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 600px;
+        }
+
+        /* ---------- filter bar ---------- */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 32px 0 24px;
+            align-items: center;
+        }
+
+        .search-wrapper {
+            flex: 2;
+            min-width: 260px;
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 16px 20px 16px 48px;
+            border: 1px solid var(--gray-200);
+            border-radius: 60px;
+            background: var(--white);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+            box-shadow: var(--card-shadow);
+        }
+
+        .search-wrapper input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(10, 102, 194, 0.15);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: var(--gray-800);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--card-shadow);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .filter-tab i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* ---------- job grid ---------- */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            margin: 24px 0 48px;
+        }
+
+        .job-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .company-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .job-title h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .job-company {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .job-company i {
+            font-size: 0.8rem;
+        }
+
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0 14px;
+        }
+
+        .tag {
+            background: var(--gray-100);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .job-desc {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: 22px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .salary {
+            font-weight: 700;
+            color: var(--gray-800);
+            font-size: 1rem;
+        }
+
+        .salary span {
+            font-weight: 400;
+            color: var(--gray-600);
+            font-size: 0.8rem;
+        }
+
+        .apply-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 10px rgba(10, 102, 194, 0.2);
+        }
+
+        .apply-btn i {
+            font-size: 0.9rem;
+        }
+
+        .apply-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .apply-btn:active {
+            transform: scale(0.97);
+        }
+
+        .apply-btn.paid {
+            background: var(--success);
+            box-shadow: 0 4px 10px rgba(30, 126, 52, 0.2);
+        }
+
+        .apply-btn.paid i {
+            color: white;
+        }
+
+        .apply-btn.disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            box-shadow: none;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .payment-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: var(--accent);
+            color: var(--gray-800);
+            font-weight: 600;
+            font-size: 0.7rem;
+            padding: 6px 12px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .payment-badge i {
+            font-size: 0.7rem;
+        }
+
+        /* ---------- toast / alert ---------- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-800);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 60px;
+            font-weight: 500;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        /* ---------- footer ---------- */
+        footer {
+            margin-top: auto;
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 32px 0;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            margin-left: 24px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ---------- modal (payment simulation) ---------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .modal p {
+            color: var(--gray-600);
+            margin-bottom: 28px;
+        }
+
+        .modal .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 16px 0 8px;
+        }
+
+        .modal .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-600);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn-outline {
+            flex: 1;
+            padding: 16px;
+            border-radius: 60px;
+            border: 1px solid var(--gray-200);
+            background: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--gray-100);
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 16px;
+            border-radius: 60px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .credit-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--primary-light);
+            padding: 12px;
+            border-radius: 40px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        /* responsive */
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .nav-links {
+                gap: 18px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .footer-links a {
+                margin-left: 0;
+                margin-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- header -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <i class="fas fa-briefcase"></i>
+                <span>Pay2Apply</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Jobs</a>
+                <a href="#">Companies</a>
+                <a href="#">Pricing</a>
+            </div>
+            <div class="user-badge">
+                <div class="credit-pill" id="creditDisplay">
+                    <i class="fas fa-coins"></i> 5 credits
+                </div>
+                <div class="avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- main content -->
+    <main class="container">
+        <!-- hero -->
+        <section class="hero">
+            <h1>Land your dream job <span>faster</span> — with premium access.</h1>
+            <p>Apply to exclusive roles. Each application uses 1 credit. Top companies, real opportunities.</p>
+        </section>
+
+        <!-- search + filter -->
+        <div class="filter-bar">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search jobs, companies, or keywords..." id="searchInput">
+            </div>
+            <div class="filter-tabs">
+                <div class="filter-tab active" data-filter="all"><i class="fas fa-layer-group"></i> All</div>
+                <div class="filter-tab" data-filter="engineering"><i class="fas fa-code"></i> Engineering</div>
+                <div class="filter-tab" data-filter="design"><i class="fas fa-paint-brush"></i> Design</div>
+                <div class="filter-tab" data-filter="marketing"><i class="fas fa-bullhorn"></i> Marketing</div>
+            </div>
+        </div>
+
+        <!-- job grid -->
+        <div class="job-grid" id="jobGrid">
+            <!-- job cards will be injected via JS -->
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="container footer-inner">
+            <div>© 2025 Pay2Apply · Premium job board</div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- toast notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Application submitted!</span>
+    </div>
+
+    <!-- payment modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <i class="fas fa-lock" style="font-size: 2rem; color: var(--primary);"></i>
+            <h2>Confirm application</h2>
+            <p>You are about to apply for <strong id="modalJobTitle">this role</strong></p>
+            <div class="price">$4.99 <span>/ one-time</span></div>
+            <div class="credit-info">
+                <i class="fas fa-coins"></i> You have <span id="modalCredits">5</span> credits
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-outline" id="cancelPayment">Cancel</button>
+                <button class="btn-primary" id="confirmPayment">Pay & Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- mock job data ----------
+            const jobs = [
+                {
+                    id: 1,
+                    title: "Senior Frontend Engineer",
+                    company: "Flowstack",
+                    logoIcon: "fa-code",
+                    tags: ["React", "TypeScript", "Remote"],
+                    description: "Build beautiful interfaces for our next-gen analytics platform. Work with a world-class team.",
+                    salary: "$120k – $150k",
+                    category: "engineering"
+                },
+                {
+                    id: 2,
+                    title: "Product Designer (UI/UX)",
+                    company: "CreativePulse",
+                    logoIcon: "fa-paint-brush",
+                    tags: ["Figma", "Design systems", "Full-time"],
+                    description: "Shape the future of our design language. Collaborate with product and engineering to craft delightful experiences.",
+                    salary: "$95k – $120k",
+                    category: "design"
+                },
+                {
+                    id: 3,
+                
